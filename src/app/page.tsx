@@ -541,6 +541,8 @@ export default function Home() {
             Hecho con ❤️ por <a href="https://github.com/MatiDeZeta" target="_blank" rel="noopener noreferrer" className="text-zinc-200 hover:text-zinc-100 transition-colors duration-300">MatiDZ</a> para la comunidad de GTA World en Español
             <br />
             Versión 1.0.0
+            <br />
+            <a href="https://github.com/MatiDeZeta/lspd-business-cards" target="_blank" rel="noopener noreferrer" className="text-zinc-200 hover:text-zinc-100 transition-colors duration-300">GitHub</a>
           </p>
         </footer>
       </div>
