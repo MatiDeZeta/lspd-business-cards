@@ -180,7 +180,7 @@ export default function CardForm({ cardData, onChange, onReset }: CardFormProps)
           id="email"
           value={cardData.email}
           onChange={(e) => onChange("email", e.target.value)}
-          placeholder="e.g., j.smith@lspd.gov"
+          placeholder="e.g., j.smith@lspdonline.org"
           maxLength={40}
           className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
         />

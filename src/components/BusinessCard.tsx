@@ -32,23 +32,59 @@ const BusinessCard = forwardRef<HTMLDivElement, BusinessCardProps>(
         style={{
           width: "700px",
           height: "400px",
-          backgroundColor: "#fdfdfd",
+          backgroundColor: "#fafafa",
           position: "relative",
           fontFamily: "'Times New Roman', Times, serif",
           boxSizing: "border-box",
           overflow: "hidden",
-          boxShadow: "0 0 0 1px #e5e5e5", // Subtle border
+          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.12), 0 0 0 1px #e5e5e5",
+          borderRadius: "16px",
+          border: "2px solid #d1d5db",
         }}
       >
-        {/* Paper Texture Overlay */}
+        {/* Realistic Paper Texture */}
+        <div 
+          style={{
+            position: "absolute",
+            inset: 0,
+            opacity: 0.15,
+            pointerEvents: "none",
+            backgroundImage: `
+              url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='paper' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='white' surfaceScale='1'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23paper)' opacity='0.4'/%3E%3C/svg%3E"),
+              url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='fibers' x='0' y='0'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.02' numOctaves='1' result='turbulence'/%3E%3CfeColorMatrix in='turbulence' type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='0 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 0.5 1'/%3E%3C/feComponentTransfer%3E%3CfeComposite operator='over' in2='SourceGraphic'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23fibers)' opacity='0.3'/%3E%3C/svg%3E"),
+              url("data:image/svg+xml,%3Csvg width='300' height='300' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grain' width='100' height='100' patternUnits='userSpaceOnUse'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' seed='2'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='300' height='300' fill='url(%23grain)' opacity='0.6'/%3E%3C/svg%3E")
+            `,
+            backgroundBlendMode: "multiply, overlay, soft-light",
+            backgroundRepeat: "repeat",
+            backgroundSize: "100px 100px, 200px 200px, 300px 300px",
+          }}
+        />
+        
+        {/* Subtle paper fibers */}
         <div 
           style={{
             position: "absolute",
             inset: 0,
             opacity: 0.08,
             pointerEvents: "none",
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E")`,
-            backgroundRepeat: "repeat",
+            backgroundImage: `
+              linear-gradient(45deg, transparent 48%, rgba(139, 69, 19, 0.03) 49%, rgba(139, 69, 19, 0.03) 51%, transparent 52%),
+              linear-gradient(-45deg, transparent 48%, rgba(160, 82, 45, 0.02) 49%, rgba(160, 82, 45, 0.02) 51%, transparent 52%),
+              linear-gradient(90deg, transparent 48%, rgba(210, 180, 140, 0.01) 49%, rgba(210, 180, 140, 0.01) 51%, transparent 52%)
+            `,
+            backgroundBlendMode: "multiply",
+            backgroundSize: "20px 20px, 30px 30px, 40px 40px",
+          }}
+        />
+        
+        {/* Paper edge shadow */}
+        <div 
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+            background: "radial-gradient(circle at 30% 40%, transparent 70%, rgba(0,0,0,0.05) 100%)",
+            mixBlendMode: "multiply",
           }}
         />
 

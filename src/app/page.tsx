@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import html2canvas from "html2canvas";
 import BusinessCard from "@/components/BusinessCard";
 
@@ -17,14 +17,14 @@ export interface CardData {
 }
 
 const defaultCardData: CardData = {
-  rank: "Police Detective II",
-  fullName: "Natalia A. Montemayor",
+  rank: "Police Officer III",
+  fullName: "Michael R. Torres",
   serialNumber: "38291",
-  division: "Select a Division",
-  assignment: "Communiy Relations Officer",
+  division: "Central Area",
+  assignment: "Community Relations Officer",
   phone: "(213) 486-1163",
   cell: "(213) 555-0147",
-  email: "m.torres@lspd.gta.gov",
+  email: "m.torres@lspdonline.org",
   address: "1401 Sinner Street\nLos Santos, SA 90017",
 };
 
@@ -33,12 +33,12 @@ const RANKS = [
   "Police Officer II", 
   "Police Officer III",
   "Police Officer III+1",
-  "Police Detective I",
-  "Police Detective II",
-  "Police Detective III",
-  "Police Sergeant I",
-  "Police Sergeant II",
-  "Police Lieutenant I",
+  "Detective I",
+  "Detective II",
+  "Detective III",
+  "Sergeant I",
+  "Sergeant II",
+  "Lieutenant I",
   "Lieutenant II",
   "Captain I",
   "Captain II",
@@ -107,6 +107,74 @@ export default function Home() {
   const [exportQuality, setExportQuality] = useState<"standard" | "high">("high");
   const cardRef = useRef<HTMLDivElement>(null);
 
+  // Custom cursor effect
+  useEffect(() => {
+    const cursor = document.createElement('div');
+    const follower = document.createElement('div');
+    cursor.className = 'cursor';
+    follower.className = 'cursor-follower';
+    document.body.appendChild(cursor);
+    document.body.appendChild(follower);
+
+    const handleMouseMove = (e: MouseEvent) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      
+      setTimeout(() => {
+        follower.style.left = e.clientX + 'px';
+        follower.style.top = e.clientY + 'px';
+      }, 100);
+    };
+
+    const handleMouseEnter = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.matches('button, input, select, textarea, a')) {
+        cursor.classList.add('hover');
+      }
+    };
+
+    const handleMouseLeave = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.matches('button, input, select, textarea, a')) {
+        cursor.classList.remove('hover');
+      }
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseover', handleMouseEnter);
+    document.addEventListener('mouseout', handleMouseLeave);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseover', handleMouseEnter);
+      document.removeEventListener('mouseout', handleMouseLeave);
+      cursor.remove();
+      follower.remove();
+    };
+  }, []);
+
+  // Snowflakes effect
+  useEffect(() => {
+    const createSnowflake = () => {
+      const snowflake = document.createElement('div');
+      snowflake.className = 'snowflake';
+      snowflake.innerHTML = '❄';
+      snowflake.style.left = Math.random() * window.innerWidth + 'px';
+      snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+      snowflake.style.opacity = Math.random() * 0.6 + 0.2;
+      snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+      document.body.appendChild(snowflake);
+
+      setTimeout(() => {
+        snowflake.remove();
+      }, 5000);
+    };
+
+    const interval = setInterval(createSnowflake, 300);
+
+    return () => clearInterval(interval);
+  }, []);
+
   const handleChange = (field: keyof CardData, value: string) => {
     setCardData((prev) => ({ ...prev, [field]: value }));
   };
@@ -174,7 +242,7 @@ export default function Home() {
         scale: 8, // High scale for quality
         useCORS: true,
         allowTaint: true,
-        backgroundColor: null,
+        backgroundColor: "#ffffff",
         logging: false,
         imageTimeout: 15000,
       });
@@ -186,9 +254,9 @@ export default function Home() {
       const ctx = finalCanvas.getContext('2d');
       
       if (ctx) {
-        // Make background transparent
-        // ctx.fillStyle = '#ffffff';
-        // ctx.fillRect(0, 0, targetWidth, targetHeight);
+        // Fill with white background
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, targetWidth, targetHeight);
         
         // Calculate position to center the card in the note
         const cardAspect = canvas.width / canvas.height;
@@ -230,54 +298,59 @@ export default function Home() {
     <main className="min-h-screen p-6 md:p-10">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <header className="mb-12 no-print">
-          <h1 className="text-3xl font-light tracking-tight text-white mb-1">
+        <header className="mb-12 no-print fade-in">
+          <h1 className="text-4xl font-light tracking-tight text-white mb-2">
             LSPD Card Generator
           </h1>
-          <p className="text-neutral-500 text-sm">
+          <p className="text-neutral-400 text-sm">
             Los Santos Police Department Business Cards
           </p>
         </header>
 
-        <div className="grid lg:grid-cols-[1fr,auto] gap-10 items-start">
+        <div className="grid lg:grid-cols-[1fr,auto] gap-12 items-start">
           {/* Form */}
-          <div className="space-y-6 no-print">
-            <div className="grid sm:grid-cols-2 gap-4">
+          <div className="space-y-6 no-print fade-in" style={{ animationDelay: '0.2s' }}>
+            <div className="bg-zinc-900/20 backdrop-blur-sm border border-zinc-800/50 rounded-3xl p-8 shadow-xl">
+              <h2 className="text-xl font-light text-white mb-8 flex items-center gap-3">
+                <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                Officer Information
+              </h2>
+            <div className="grid sm:grid-cols-2 gap-4 mb-8">
               <div>
-                <label className="block text-xs text-neutral-500 mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs text-zinc-300 mb-2 uppercase tracking-wide font-medium">
                   Full Name
                 </label>
                 <input
                   type="text"
                   value={cardData.fullName}
                   onChange={(e) => handleChange("fullName", e.target.value)}
-                  className="w-full px-3 py-2.5 bg-neutral-900 border border-neutral-800 rounded text-white text-sm"
+                  className="w-full px-4 py-3 bg-zinc-800/30 border border-zinc-700/50 rounded-xl text-white text-sm backdrop-blur-sm transition-all duration-200 focus:border-zinc-600 focus:bg-zinc-800/40 placeholder:text-zinc-500"
                   placeholder="John A. Smith"
                 />
               </div>
               <div>
-                <label className="block text-xs text-neutral-500 mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs text-zinc-300 mb-2 uppercase tracking-wide font-medium">
                   Serial Number
                 </label>
                 <input
                   type="text"
                   value={cardData.serialNumber}
                   onChange={(e) => handleChange("serialNumber", e.target.value)}
-                  className="w-full px-3 py-2.5 bg-neutral-900 border border-neutral-800 rounded text-white text-sm"
+                  className="w-full px-4 py-3 bg-zinc-800/30 border border-zinc-700/50 rounded-xl text-white text-sm backdrop-blur-sm transition-all duration-200 focus:border-zinc-600 focus:bg-zinc-800/40 placeholder:text-zinc-500"
                   placeholder="12345"
                 />
               </div>
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 gap-4 mb-8">
               <div>
-                <label className="block text-xs text-neutral-500 mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs text-zinc-300 mb-2 uppercase tracking-wide font-medium">
                   Rank
                 </label>
                 <select
                   value={cardData.rank}
                   onChange={(e) => handleChange("rank", e.target.value)}
-                  className="w-full px-3 py-2.5 bg-neutral-900 border border-neutral-800 rounded text-white text-sm"
+                  className="w-full px-4 py-3 bg-zinc-800/30 border border-zinc-700/50 rounded-xl text-white text-sm backdrop-blur-sm transition-all duration-200 focus:border-zinc-600 focus:bg-zinc-800/40"
                 >
                   {RANKS.map((r) => (
                     <option key={r} value={r}>{r}</option>
@@ -285,13 +358,13 @@ export default function Home() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs text-neutral-500 mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs text-zinc-300 mb-2 uppercase tracking-wide font-medium">
                   Division
                 </label>
                 <select
                   value={cardData.division}
                   onChange={(e) => handleChange("division", e.target.value)}
-                  className="w-full px-3 py-2.5 bg-neutral-900 border border-neutral-800 rounded text-white text-sm"
+                  className="w-full px-4 py-3 bg-zinc-800/30 border border-zinc-700/50 rounded-xl text-white text-sm backdrop-blur-sm transition-all duration-200 focus:border-zinc-600 focus:bg-zinc-800/40"
                 >
                   {DIVISIONS.map((d) => (
                     <option key={d} value={d}>{d}</option>
@@ -300,94 +373,95 @@ export default function Home() {
               </div>
             </div>
 
-            <div>
-              <label className="block text-xs text-neutral-500 mb-1.5 uppercase tracking-wider">
+            <div className="mb-8">
+              <label className="block text-xs text-zinc-300 mb-2 uppercase tracking-wide font-medium">
                 Assignment / Title
               </label>
               <input
                 type="text"
                 value={cardData.assignment}
                 onChange={(e) => handleChange("assignment", e.target.value)}
-                className="w-full px-3 py-2.5 bg-neutral-900 border border-neutral-800 rounded text-white text-sm"
+                className="w-full px-4 py-3 bg-zinc-800/30 border border-zinc-700/50 rounded-xl text-white text-sm backdrop-blur-sm transition-all duration-200 focus:border-zinc-600 focus:bg-zinc-800/40 placeholder:text-zinc-500"
                 placeholder="Community Relations Officer"
               />
             </div>
 
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="grid sm:grid-cols-2 gap-4 mb-8">
               <div>
-                <label className="block text-xs text-neutral-500 mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs text-zinc-300 mb-2 uppercase tracking-wide font-medium">
                   Telephone
                 </label>
                 <input
                   type="tel"
                   value={cardData.phone}
                   onChange={(e) => handleChange("phone", e.target.value)}
-                  className="w-full px-3 py-2.5 bg-neutral-900 border border-neutral-800 rounded text-white text-sm"
+                  className="w-full px-4 py-3 bg-zinc-800/30 border border-zinc-700/50 rounded-xl text-white text-sm backdrop-blur-sm transition-all duration-200 focus:border-zinc-600 focus:bg-zinc-800/40 placeholder:text-zinc-500"
                   placeholder="(213) 486-1163"
                 />
               </div>
               <div>
-                <label className="block text-xs text-neutral-500 mb-1.5 uppercase tracking-wider">
+                <label className="block text-xs text-zinc-300 mb-2 uppercase tracking-wide font-medium">
                   Cell
                 </label>
                 <input
                   type="tel"
                   value={cardData.cell}
                   onChange={(e) => handleChange("cell", e.target.value)}
-                  className="w-full px-3 py-2.5 bg-neutral-900 border border-neutral-800 rounded text-white text-sm"
+                  className="w-full px-4 py-3 bg-zinc-800/30 border border-zinc-700/50 rounded-xl text-white text-sm backdrop-blur-sm transition-all duration-200 focus:border-zinc-600 focus:bg-zinc-800/40 placeholder:text-zinc-500"
                   placeholder="(213) 555-0147"
                 />
               </div>
             </div>
 
-            <div>
-              <label className="block text-xs text-neutral-500 mb-1.5 uppercase tracking-wider">
+            <div className="mb-8">
+              <label className="block text-xs text-zinc-300 mb-2 uppercase tracking-wide font-medium">
                 Email
               </label>
               <input
                 type="email"
                 value={cardData.email}
                 onChange={(e) => handleChange("email", e.target.value)}
-                className="w-full px-3 py-2.5 bg-neutral-900 border border-neutral-800 rounded text-white text-sm"
-                placeholder="name@lspd.gta.gov"
+                className="w-full px-4 py-3 bg-zinc-800/30 border border-zinc-700/50 rounded-xl text-white text-sm backdrop-blur-sm transition-all duration-200 focus:border-zinc-600 focus:bg-zinc-800/40 placeholder:text-zinc-500"
+                placeholder="name@lspdonline.org"
               />
             </div>
 
-            <div>
-              <label className="block text-xs text-neutral-500 mb-1.5 uppercase tracking-wider">
+            <div className="mb-8">
+              <label className="block text-xs text-zinc-300 mb-2 uppercase tracking-wide font-medium">
                 Address
               </label>
               <textarea
                 value={cardData.address}
                 onChange={(e) => handleChange("address", e.target.value)}
                 rows={2}
-                className="w-full px-3 py-2.5 bg-neutral-900 border border-neutral-800 rounded text-white text-sm resize-none"
+                className="w-full px-4 py-3 bg-zinc-800/30 border border-zinc-700/50 rounded-xl text-white text-sm resize-none backdrop-blur-sm transition-all duration-200 focus:border-zinc-600 focus:bg-zinc-800/40 placeholder:text-zinc-500"
                 placeholder="1401 Sinner Street&#10;Los Santos, SA 90017"
               />
             </div>
-
+            </div>
+            
             {/* Actions */}
-            <div className="space-y-3 pt-4">
-              {/* Quality selector */}
-              <div className="flex items-center gap-4">
-                <span className="text-xs text-neutral-500 uppercase tracking-wider">Export Quality</span>
-                <div className="flex gap-2">
+            <div className="bg-zinc-900/20 backdrop-blur-sm border border-zinc-800/50 rounded-3xl p-8 shadow-xl space-y-6 fade-in" style={{ animationDelay: '0.4s' }}>
+              <h3 className="text-lg font-light text-white mb-6">Export Options</h3>
+              <div className="flex items-center justify-between p-4 bg-zinc-800/30 rounded-2xl">
+                <span className="text-sm text-zinc-300 font-medium">Export Quality</span>
+                <div className="flex gap-3">
                   <button
                     onClick={() => setExportQuality("standard")}
-                    className={`px-3 py-1.5 text-xs rounded transition-colors ${
+                    className={`px-6 py-2 text-sm rounded-2xl transition-all duration-300 ${
                       exportQuality === "standard"
-                        ? "bg-white text-black"
-                        : "bg-neutral-800 text-neutral-400 hover:bg-neutral-700"
+                        ? "bg-white text-black shadow-lg"
+                        : "bg-zinc-700/50 text-zinc-300 hover:bg-zinc-700"
                     }`}
                   >
                     Standard
                   </button>
                   <button
                     onClick={() => setExportQuality("high")}
-                    className={`px-3 py-1.5 text-xs rounded transition-colors ${
+                    className={`px-6 py-2 text-sm rounded-2xl transition-all duration-300 ${
                       exportQuality === "high"
-                        ? "bg-white text-black"
-                        : "bg-neutral-800 text-neutral-400 hover:bg-neutral-700"
+                        ? "bg-white text-black shadow-lg"
+                        : "bg-zinc-700/50 text-zinc-300 hover:bg-zinc-700"
                     }`}
                   >
                     High Quality
@@ -395,11 +469,11 @@ export default function Home() {
                 </div>
               </div>
               
-              <div className="flex gap-3">
+              <div className="flex gap-4">
                 <button
                   onClick={handleDownload}
                   disabled={isExporting}
-                  className="flex-1 py-2.5 bg-white text-black text-sm font-medium rounded hover:bg-neutral-200 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="flex-1 py-4 bg-white text-black text-sm font-medium rounded-2xl hover:bg-neutral-100 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg hover:shadow-xl"
                 >
                   {isExporting ? (
                     <>
@@ -420,7 +494,7 @@ export default function Home() {
                 </button>
                 <button
                   onClick={() => window.print()}
-                  className="flex-1 py-2.5 bg-neutral-800 text-white text-sm font-medium rounded hover:bg-neutral-700 transition-colors flex items-center justify-center gap-2"
+                  className="flex-1 py-4 bg-zinc-800 text-white text-sm font-medium rounded-2xl hover:bg-zinc-700 transition-all duration-300 flex items-center justify-center gap-2"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
@@ -432,7 +506,7 @@ export default function Home() {
               <button
                 onClick={handleDownloadGTAW}
                 disabled={isExporting}
-                className="w-full py-2.5 bg-amber-600 text-white text-sm font-medium rounded hover:bg-amber-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full py-4 bg-zinc-700 text-white text-sm font-medium rounded-2xl hover:bg-zinc-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -442,7 +516,7 @@ export default function Home() {
               
               <button
                 onClick={handleReset}
-                className="w-full py-2 text-neutral-500 text-xs hover:text-neutral-300 transition-colors"
+                className="w-full py-3 text-zinc-400 text-sm hover:text-zinc-200 transition-colors duration-300"
               >
                 Reset to Default
               </button>
@@ -450,16 +524,23 @@ export default function Home() {
           </div>
 
           {/* Preview */}
-          <div className="flex flex-col items-center">
-            <p className="text-xs text-neutral-600 mb-4 no-print uppercase tracking-wider">Preview</p>
-            <BusinessCard ref={cardRef} data={cardData} />
+          <div className="flex flex-col items-center fade-in" style={{ animationDelay: '0.6s' }}>
+            <div className="mb-8 text-center no-print">
+              <p className="text-sm text-zinc-400 uppercase tracking-wide mb-3 font-light">Live Preview</p>
+              <div className="h-px bg-gradient-to-r from-transparent via-zinc-600 to-transparent w-24"></div>
+            </div>
+            <div className="bg-zinc-900/10 backdrop-blur-sm border border-zinc-800/30 rounded-3xl p-12 shadow-2xl">
+              <BusinessCard ref={cardRef} data={cardData} />
+            </div>
           </div>
         </div>
 
         {/* Footer */}
-        <footer className="mt-16 pt-6 border-t border-neutral-900 text-center no-print">
-          <p className="text-neutral-600 text-xs">
-            For entertainment purposes only · Inspired by LAPD
+        <footer className="mt-20 pt-8 border-t border-zinc-800 text-center no-print fade-in" style={{ animationDelay: '0.8s' }}>
+          <p className="text-zinc-500 text-xs">
+            Hecho con ❤️ por <a href="https://github.com/MatiDeZeta" target="_blank" rel="noopener noreferrer" className="text-zinc-200 hover:text-zinc-100 transition-colors duration-300">MatiDZ</a> para la comunidad de GTA World en Español
+            <br />
+            Versión 1.0.0
           </p>
         </footer>
       </div>
