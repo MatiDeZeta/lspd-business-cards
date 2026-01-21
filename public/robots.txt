@@ -1,0 +1,5 @@
+User-agent: *
+Disallow:
+
+# sitemap (update if you publish a full sitemap)
+Sitemap: /sitemap.xml
