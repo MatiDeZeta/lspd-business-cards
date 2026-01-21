@@ -31,8 +31,6 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.jpg" },
-      { url: "/favicon.ico", sizes: "any" },
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
       { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
@@ -40,7 +38,7 @@ export const metadata: Metadata = {
       { url: "/favicon-128x128.png", sizes: "128x128", type: "image/png" },
       { url: "/favicon-256x256.png", sizes: "256x256", type: "image/png" },
     ],
-    shortcut: "/favicon.jpg",
+    shortcut: "/favicon-32x32.png",
     apple: "/favicon-128x128.png",
   },
   };
@@ -58,16 +56,14 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Favicons & manifest */}
-        <link rel="icon" href="/favicon.jpg" type="image/jpeg" />
-        <link rel="shortcut icon" href="/favicon.jpg" type="image/jpeg" />
-        <link rel="apple-touch-icon" href="/favicon-128x128.png" />
         <link rel="icon" href="/favicon-16x16.png" sizes="16x16" type="image/png" />
         <link rel="icon" href="/favicon-32x32.png" sizes="32x32" type="image/png" />
         <link rel="icon" href="/favicon-48x48.png" sizes="48x48" type="image/png" />
         <link rel="icon" href="/favicon-64x64.png" sizes="64x64" type="image/png" />
         <link rel="icon" href="/favicon-128x128.png" sizes="128x128" type="image/png" />
         <link rel="icon" href="/favicon-256x256.png" sizes="256x256" type="image/png" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="shortcut icon" href="/favicon-32x32.png" />
+        <link rel="apple-touch-icon" href="/favicon-128x128.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#ffffff" />
         {/* SEO / Canonical (update host when you have a production URL) */}
