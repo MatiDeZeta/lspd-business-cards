@@ -161,7 +161,7 @@ export default function Home() {
       snowflake.innerHTML = '❄';
       snowflake.style.left = Math.random() * window.innerWidth + 'px';
       snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
-      snowflake.style.opacity = Math.random() * 0.6 + 0.2;
+      snowflake.style.opacity = (Math.random() * 0.6 + 0.2).toString();
       snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
       document.body.appendChild(snowflake);
 
