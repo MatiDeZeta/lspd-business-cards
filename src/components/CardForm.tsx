@@ -1,219 +1,198 @@
 "use client";
 
-import { CardData } from "@/app/page";
-
-const RANKS = [
-  "Police Officer I",
-  "Police Officer II",
-  "Police Officer III",
-  "Police Officer III+1",
-  "Police Detective I",
-  "Police Detective II",
-  "Police Detective III",
-  "Police Sergeant I",
-  "Police Sergeant II",
-  "Police Lieutenant I",
-  "Lieutenant II",
-  "Captain I",
-  "Captain II",
-  "Captain III",
-  "Commander",
-  "Deputy Chief",
-  "Assistant Chief",
-  "Chief of Police",
-];
-
-const DIVISIONS = [
-  // Patrol Divisions
-  "Mission Row Division",
-  "Vespucci Division",
-  "Davis Division",
-  "Vinewood Division",
-  "Rockford Hills Division",
-  "Del Perro Division",
-  "La Mesa Division",
-  "Sandy Shores Division",
-  "Paleto Bay Division",
-  // Detective Bureaus
-  "Robbery-Homicide Division",
-  "Commercial Crimes Division",
-  "Juvenile Division",
-  "Detective Support Division",
-  // Specialized Units
-  "Gang Enforcement Detail",
-  "K-9 Unit",
-  "SWAT",
-  "Air Support Division",
-  "Metropolitan Division",
-  "Traffic Division",
-  "Harbor Division",
-  "Motor Unit",
-  "Mounted Unit",
-  // Administrative
-  "Internal Affairs Division",
-  "Training Division",
-  "Personnel Division",
-  "Public Affairs Division",
-  "Office of the Chief of Police",
-];
+import { DIVISIONS } from "@/constants/divisions";
+import { RANKS } from "@/constants/ranks";
+import { ValidationWarning } from "@/lib/validation";
+import { CardData } from "@/types/card";
 
 interface CardFormProps {
   cardData: CardData;
+  warnings: ValidationWarning[];
   onChange: (field: keyof CardData, value: string) => void;
-  onReset: () => void;
 }
 
-export default function CardForm({ cardData, onChange, onReset }: CardFormProps) {
+const inputClassName =
+  "w-full px-4 py-3 bg-[#0a1628]/60 border border-[#1e3a5f]/60 rounded-xl text-white text-sm backdrop-blur-sm transition-all duration-200 focus:border-[#C5A028]/60 focus:bg-[#0a1628]/80 focus:ring-1 focus:ring-[#C5A028]/40 placeholder:text-slate-500";
+
+const labelClassName =
+  "block text-xs text-slate-300 mb-2 uppercase tracking-wide font-medium";
+
+export default function CardForm({
+  cardData,
+  warnings,
+  onChange,
+}: CardFormProps) {
+  const warningFields = new Set(warnings.map((w) => w.field));
+
   return (
-    <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
-      {/* Rank */}
-      <div>
-        <label
-          htmlFor="rank"
-          className="block text-sm font-medium text-slate-300 mb-2"
+    <form className="space-y-0" onSubmit={(e) => e.preventDefault()}>
+      {warnings.length > 0 && (
+        <div
+          className="mb-6 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3"
+          role="status"
         >
-          Rank/Title
-        </label>
-        <select
-          id="rank"
-          value={cardData.rank}
-          onChange={(e) => onChange("rank", e.target.value)}
-          className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
-        >
-          {RANKS.map((rank) => (
-            <option key={rank} value={rank}>
-              {rank}
-            </option>
-          ))}
-        </select>
+          <ul className="space-y-1 text-sm text-amber-100">
+            {warnings.map((warning) => (
+              <li key={warning.field}>{warning.message}</li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <div className="grid sm:grid-cols-2 gap-4 mb-6">
+        <div>
+          <label htmlFor="fullName" className={labelClassName}>
+            Full Name
+          </label>
+          <input
+            type="text"
+            id="fullName"
+            value={cardData.fullName}
+            onChange={(e) => onChange("fullName", e.target.value)}
+            className={`${inputClassName} ${
+              warningFields.has("fullName") ? "border-amber-500/50" : ""
+            }`}
+            placeholder="John A. Smith"
+          />
+        </div>
+        <div>
+          <label htmlFor="serialNumber" className={labelClassName}>
+            Serial Number
+          </label>
+          <input
+            type="text"
+            id="serialNumber"
+            value={cardData.serialNumber}
+            onChange={(e) => onChange("serialNumber", e.target.value)}
+            className={inputClassName}
+            placeholder="12345"
+          />
+        </div>
       </div>
 
-      {/* Full Name */}
-      <div>
-        <label
-          htmlFor="fullName"
-          className="block text-sm font-medium text-slate-300 mb-2"
-        >
-          Full Name
+      <div className="grid sm:grid-cols-2 gap-4 mb-6">
+        <div>
+          <label htmlFor="rank" className={labelClassName}>
+            Rank
+          </label>
+          <select
+            id="rank"
+            value={cardData.rank}
+            onChange={(e) => onChange("rank", e.target.value)}
+            className={inputClassName}
+          >
+            {RANKS.map((rank) => (
+              <option key={rank} value={rank}>
+                {rank}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label htmlFor="division" className={labelClassName}>
+            Division
+          </label>
+          <select
+            id="division"
+            value={cardData.division}
+            onChange={(e) => onChange("division", e.target.value)}
+            className={inputClassName}
+          >
+            {DIVISIONS.map((division) => (
+              <option key={division} value={division}>
+                {division}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div className="mb-6">
+        <label htmlFor="assignment" className={labelClassName}>
+          Assignment / Title
         </label>
         <input
           type="text"
-          id="fullName"
-          value={cardData.fullName}
-          onChange={(e) => onChange("fullName", e.target.value)}
-          placeholder="e.g., John A. Smith"
-          maxLength={40}
-          className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+          id="assignment"
+          value={cardData.assignment}
+          onChange={(e) => onChange("assignment", e.target.value)}
+          className={inputClassName}
+          placeholder="Community Relations Officer"
         />
       </div>
 
-      {/* Serial Number */}
-      <div>
-        <label
-          htmlFor="serialNumber"
-          className="block text-sm font-medium text-slate-300 mb-2"
-        >
-          Serial/Badge Number
-        </label>
-        <input
-          type="text"
-          id="serialNumber"
-          value={cardData.serialNumber}
-          onChange={(e) => onChange("serialNumber", e.target.value)}
-          placeholder="e.g., 38291"
-          maxLength={10}
-          className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
-        />
+      <div className="grid sm:grid-cols-2 gap-4 mb-6">
+        <div>
+          <label htmlFor="phone" className={labelClassName}>
+            Telephone
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            value={cardData.phone}
+            onChange={(e) => onChange("phone", e.target.value)}
+            className={inputClassName}
+            placeholder="(213) 486-1163"
+          />
+        </div>
+        <div>
+          <label htmlFor="cell" className={labelClassName}>
+            Cell
+          </label>
+          <input
+            type="tel"
+            id="cell"
+            value={cardData.cell}
+            onChange={(e) => onChange("cell", e.target.value)}
+            className={inputClassName}
+            placeholder="(213) 555-0147"
+          />
+        </div>
       </div>
 
-      {/* Division */}
-      <div>
-        <label
-          htmlFor="division"
-          className="block text-sm font-medium text-slate-300 mb-2"
-        >
-          Division/Unit
-        </label>
-        <select
-          id="division"
-          value={cardData.division}
-          onChange={(e) => onChange("division", e.target.value)}
-          className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
-        >
-          {DIVISIONS.map((division) => (
-            <option key={division} value={division}>
-              {division}
-            </option>
-          ))}
-        </select>
+      <div className="grid sm:grid-cols-2 gap-4 mb-6">
+        <div>
+          <label htmlFor="fax" className={labelClassName}>
+            Fax <span className="normal-case text-slate-500">(optional)</span>
+          </label>
+          <input
+            type="tel"
+            id="fax"
+            value={cardData.fax}
+            onChange={(e) => onChange("fax", e.target.value)}
+            className={inputClassName}
+            placeholder="(213) 486-0000"
+          />
+        </div>
+        <div>
+          <label htmlFor="email" className={labelClassName}>
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            value={cardData.email}
+            onChange={(e) => onChange("email", e.target.value)}
+            className={`${inputClassName} ${
+              warningFields.has("email") ? "border-amber-500/50" : ""
+            }`}
+            placeholder="name@lspdonline.org"
+          />
+        </div>
       </div>
 
-      {/* Phone */}
       <div>
-        <label
-          htmlFor="phone"
-          className="block text-sm font-medium text-slate-300 mb-2"
-        >
-          Phone Number
+        <label htmlFor="address" className={labelClassName}>
+          Address
         </label>
-        <input
-          type="tel"
-          id="phone"
-          value={cardData.phone}
-          onChange={(e) => onChange("phone", e.target.value)}
-          placeholder="e.g., (213) 555-0147"
-          maxLength={20}
-          className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
-        />
-      </div>
-
-      {/* Email */}
-      <div>
-        <label
-          htmlFor="email"
-          className="block text-sm font-medium text-slate-300 mb-2"
-        >
-          Email Address
-        </label>
-        <input
-          type="email"
-          id="email"
-          value={cardData.email}
-          onChange={(e) => onChange("email", e.target.value)}
-          placeholder="e.g., j.smith@lspdonline.org"
-          maxLength={40}
-          className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
-        />
-      </div>
-
-      {/* Address */}
-      <div>
-        <label
-          htmlFor="address"
-          className="block text-sm font-medium text-slate-300 mb-2"
-        >
-          Street Address
-        </label>
-        <input
-          type="text"
+        <textarea
           id="address"
           value={cardData.address}
           onChange={(e) => onChange("address", e.target.value)}
-          placeholder="e.g., 1401 Sinner Street, Los Santos, SA 90017"
-          maxLength={60}
-          className="w-full px-4 py-3 bg-slate-900/50 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
+          rows={2}
+          className={`${inputClassName} resize-none`}
+          placeholder={"1401 Sinner Street\nLos Santos, SA 90017"}
         />
-      </div>
-
-      {/* Reset Button */}
-      <div className="pt-4">
-        <button
-          type="button"
-          onClick={onReset}
-          className="w-full px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-lg transition-colors"
-        >
-          Reset Form
-        </button>
       </div>
     </form>
   );

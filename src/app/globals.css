@@ -3,86 +3,61 @@
 :root {
   --font-serif: "Times New Roman", Georgia, serif;
   --font-sans: "Helvetica Neue", Arial, sans-serif;
+  --lapd-navy: #002244;
+  --lapd-navy-light: #1e3a5f;
+  --lapd-gold: #c5a028;
+  --lapd-paper: #f7f5f0;
 }
 
 body {
   font-family: var(--font-sans);
-  background: 
-    url("/Logo-LSPD.png") center/480px no-repeat fixed,
-    linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
+  background:
+    url("/Logo-LSPD.png") center/320px no-repeat fixed,
+    linear-gradient(160deg, #001a33 0%, var(--lapd-navy) 45%, #000d1a 100%);
   min-height: 100vh;
   color: #fafafa;
-  cursor: none;
   overflow-x: hidden;
 }
 
 body::before {
   content: "";
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: url("/Logo-LSPD.png") center/120px no-repeat fixed;
-  opacity: 0.6;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 40%,
+    rgba(0, 0, 0, 0.45) 100%
+  );
   pointer-events: none;
   z-index: 0;
 }
 
-/* Custom cursor */
-.cursor {
-  width: 20px;
-  height: 20px;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transition: transform 0.1s ease, border-color 0.3s ease;
-  transform: translate(-50%, -50%);
+.panel-gold {
+  background: rgba(0, 34, 68, 0.35);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(30, 58, 95, 0.55);
+  border-top-color: rgba(197, 160, 40, 0.25);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
 }
 
-.cursor-follower {
-  width: 8px;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9998;
-  transition: transform 0.3s ease;
-  transform: translate(-50%, -50%);
+.preview-chrome {
+  position: relative;
+  padding: 2.5rem;
+  background: rgba(0, 34, 68, 0.2);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(30, 58, 95, 0.4);
+  border-radius: 1rem;
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(197, 160, 40, 0.08);
 }
 
-.cursor.hover {
-  transform: translate(-50%, -50%) scale(1.5);
-  border-color: rgba(255, 255, 255, 1);
-}
-
-/* Snowflakes animation */
-.snowflake {
-  position: fixed;
-  top: -10px;
-  z-index: 1;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1em;
-  animation: fall linear infinite;
-}
-
-@keyframes fall {
-  from {
-    transform: translateY(-100vh) rotate(0deg);
-  }
-  to {
-    transform: translateY(100vh) rotate(360deg);
-  }
-}
-
-/* Fade in animation */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -91,94 +66,84 @@ body::before {
 }
 
 .fade-in {
-  animation: fadeIn 0.8s ease-out;
+  animation: fadeIn 0.7s ease-out both;
 }
 
-/* Hover animations */
-.hover-lift {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+@media (prefers-reduced-motion: reduce) {
+  .fade-in {
+    animation: none;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    transform: none;
+  }
 }
 
-.hover-lift:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+input,
+select,
+textarea {
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-/* Input animations */
-input, select, textarea {
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-input:focus, select:focus, textarea:focus {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
-}
-
-/* Button animations */
-.btn-animate {
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn-animate::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease;
-}
-
-.btn-animate:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
-.btn-animate:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1a1a1a;
+  background: #001a33;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #404040;
+  background: var(--lapd-navy-light);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #254a75;
 }
 
-/* Card styles */
-.card-shadow {
-  box-shadow: 
-    0 4px 6px -1px rgba(0, 0, 0, 0.3),
-    0 2px 4px -2px rgba(0, 0, 0, 0.2);
-}
-
-/* Print styles */
+/* Print: card only, centered */
 @media print {
   body {
-    background: white;
+    background: white !important;
   }
+
+  body::before {
+    display: none !important;
+  }
+
   .no-print {
     display: none !important;
   }
-  .cursor, .cursor-follower, .snowflake {
+
+  main {
+    padding: 0 !important;
+  }
+
+  .print-preview-root .preview-chrome {
     display: none !important;
   }
+
+  .print-only-card {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  [data-card] {
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+}
+
+.print-only-card {
+  display: none;
 }
