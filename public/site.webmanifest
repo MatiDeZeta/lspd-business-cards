@@ -4,8 +4,8 @@
   "description": "Generate realistic LSPD-style business cards with live preview, rank-specific badge images and high-quality exports.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#002244",
-  "theme_color": "#002244",
+  "background_color": "#000000",
+  "theme_color": "#000000",
   "icons": [
     {
       "src": "/favicon-128x128.png",

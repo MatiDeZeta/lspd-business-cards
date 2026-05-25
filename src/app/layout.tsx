@@ -51,7 +51,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-  themeColor: "#002244",
+  themeColor: "#000000",
 };
 
 export default function RootLayout({
@@ -101,7 +101,7 @@ export default function RootLayout({
         <link rel="shortcut icon" href="/favicon-32x32.png" />
         <link rel="apple-touch-icon" href="/favicon-128x128.png" />
         <link rel="manifest" href="/site.webmanifest" />
-        <meta name="theme-color" content="#002244" />
+        <meta name="theme-color" content="#000000" />
         <link rel="canonical" href="/" />
       </head>
       <body>{children}</body>

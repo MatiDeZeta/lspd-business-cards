@@ -11,7 +11,7 @@ interface BusinessCardProps {
 }
 
 const SERIF = "'Times New Roman', Times, serif";
-const PAPER_COLOR = "#F7F5F0";
+const PAPER_COLOR = "#ffffff";
 
 const BusinessCard = forwardRef<HTMLDivElement, BusinessCardProps>(
   ({ data, onBadgeLoad }, ref) => {
@@ -64,7 +64,7 @@ const BusinessCard = forwardRef<HTMLDivElement, BusinessCardProps>(
           style={{
             position: "absolute",
             inset: 0,
-            opacity: 0.08,
+            opacity: 0.04,
             pointerEvents: "none",
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E")`,
             backgroundRepeat: "repeat",
@@ -80,7 +80,7 @@ const BusinessCard = forwardRef<HTMLDivElement, BusinessCardProps>(
             inset: 0,
             pointerEvents: "none",
             background:
-              "radial-gradient(circle at 50% 50%, transparent 65%, rgba(0,0,0,0.04) 100%)",
+              "radial-gradient(circle at 50% 50%, transparent 70%, rgba(0,0,0,0.03) 100%)",
           }}
         />
 
@@ -98,7 +98,8 @@ const BusinessCard = forwardRef<HTMLDivElement, BusinessCardProps>(
             transform: "translateY(-50%)",
             width: "180px",
             height: "auto",
-            opacity: 0.04,
+            opacity: 0.03,
+            filter: "grayscale(100%)",
             pointerEvents: "none",
             zIndex: 1,
           }}
@@ -158,7 +159,7 @@ const BusinessCard = forwardRef<HTMLDivElement, BusinessCardProps>(
               style={{
                 width: "100%",
                 aspectRatio: "0.77",
-                backgroundColor: "rgba(0,34,68,0.06)",
+                backgroundColor: "rgba(0,0,0,0.04)",
               }}
             />
           )}
@@ -181,7 +182,7 @@ const BusinessCard = forwardRef<HTMLDivElement, BusinessCardProps>(
               fontSize: "36px",
               fontWeight: "bold",
               margin: "0 0 6px 0",
-              color: "#111",
+              color: "#000",
               lineHeight: 1.05,
             }}
           >
@@ -193,7 +194,7 @@ const BusinessCard = forwardRef<HTMLDivElement, BusinessCardProps>(
               fontSize: "19px",
               fontWeight: "bold",
               margin: "0 0 4px 0",
-              color: "#222",
+              color: "#000",
             }}
           >
             {data.rank}
@@ -205,7 +206,7 @@ const BusinessCard = forwardRef<HTMLDivElement, BusinessCardProps>(
                 fontSize: "15px",
                 fontStyle: "italic",
                 margin: "0 0 16px 0",
-                color: "#333",
+                color: "#000",
                 lineHeight: 1.3,
               }}
             >
@@ -221,7 +222,7 @@ const BusinessCard = forwardRef<HTMLDivElement, BusinessCardProps>(
                 justifyContent: "center",
                 gap: "12px",
                 fontSize: "13px",
-                color: "#111",
+                color: "#000",
                 fontWeight: 500,
                 marginBottom: "4px",
               }}
@@ -237,7 +238,7 @@ const BusinessCard = forwardRef<HTMLDivElement, BusinessCardProps>(
               style={{
                 fontSize: "13px",
                 marginTop: "2px",
-                color: "#111",
+                color: "#000",
                 fontWeight: 500,
               }}
             >
@@ -255,7 +256,7 @@ const BusinessCard = forwardRef<HTMLDivElement, BusinessCardProps>(
             fontFamily: SERIF,
             fontSize: "14px",
             fontWeight: "bold",
-            color: "#111",
+            color: "#000",
             lineHeight: 1.35,
             textAlign: "left",
             zIndex: 10,

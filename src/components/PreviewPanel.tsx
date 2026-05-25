@@ -26,7 +26,7 @@ export default function PreviewPanel({ cardData, cardRef }: PreviewPanelProps) {
   useEffect(() => {
     const updateScale = () => {
       if (!containerRef.current) return;
-      const availableWidth = containerRef.current.clientWidth - 48;
+      const availableWidth = containerRef.current.clientWidth - 32;
       const nextScale = Math.min(1, availableWidth / CARD_WIDTH);
       setScale(nextScale > 0 ? nextScale : 1);
     };
@@ -37,23 +37,20 @@ export default function PreviewPanel({ cardData, cardRef }: PreviewPanelProps) {
   }, []);
 
   return (
-    <div className="flex flex-col items-center fade-in print-preview-root">
-      <div className="mb-6 text-center no-print">
-        <p className="text-sm text-[#C5A028]/80 uppercase tracking-[0.2em] mb-3 font-light">
-          Live Preview
-        </p>
-        <div className="h-px bg-gradient-to-r from-transparent via-[#C5A028]/50 to-transparent w-24 mx-auto" />
-      </div>
+    <div className="flex flex-col items-center fade-in print-preview-root w-full">
+      <p className="text-[11px] uppercase tracking-[0.25em] text-neutral-500 mb-6 no-print">
+        Preview
+      </p>
 
       <div
         ref={containerRef}
         className="preview-chrome w-full max-w-[760px] no-print relative"
       >
         {!badgeLoaded && (
-          <div
-            className="absolute inset-0 z-10 flex items-center justify-center rounded-lg bg-[#0a1628]/40 backdrop-blur-sm"
-          >
-            <span className="text-sm text-slate-300">Loading preview...</span>
+          <div className="absolute inset-0 z-10 flex items-center justify-center bg-black/80">
+            <span className="text-[11px] uppercase tracking-[0.2em] text-neutral-500">
+              Loading
+            </span>
           </div>
         )}
 
@@ -81,7 +78,6 @@ export default function PreviewPanel({ cardData, cardRef }: PreviewPanelProps) {
         </div>
       </div>
 
-      {/* Print-only duplicate — shown centered via print CSS */}
       <div className="print-only-card hidden">
         <BusinessCard data={cardData} />
       </div>

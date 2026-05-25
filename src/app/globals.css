@@ -3,118 +3,83 @@
 :root {
   --font-serif: "Times New Roman", Georgia, serif;
   --font-sans: "Helvetica Neue", Arial, sans-serif;
-  --lapd-navy: #002244;
-  --lapd-navy-light: #1e3a5f;
-  --lapd-gold: #c5a028;
-  --lapd-paper: #f7f5f0;
+  --mono-black: #000000;
+  --mono-white: #ffffff;
+  --mono-gray-100: #f5f5f5;
+  --mono-gray-400: #a3a3a3;
+  --mono-gray-600: #525252;
+  --mono-gray-800: #262626;
+  --mono-gray-900: #171717;
 }
 
 body {
   font-family: var(--font-sans);
-  background:
-    url("/Logo-LSPD.png") center/320px no-repeat fixed,
-    linear-gradient(160deg, #001a33 0%, var(--lapd-navy) 45%, #000d1a 100%);
+  background: var(--mono-black);
   min-height: 100vh;
-  color: #fafafa;
+  color: var(--mono-white);
   overflow-x: hidden;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(
-    ellipse at center,
-    transparent 40%,
-    rgba(0, 0, 0, 0.45) 100%
-  );
-  pointer-events: none;
-  z-index: 0;
-}
-
-.panel-gold {
-  background: rgba(0, 34, 68, 0.35);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(30, 58, 95, 0.55);
-  border-top-color: rgba(197, 160, 40, 0.25);
-  border-radius: 1.5rem;
+.panel {
+  background: var(--mono-black);
+  border: 1px solid var(--mono-gray-800);
+  border-radius: 0;
   padding: 2rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
 }
 
 .preview-chrome {
   position: relative;
-  padding: 2.5rem;
-  background: rgba(0, 34, 68, 0.2);
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(30, 58, 95, 0.4);
-  border-radius: 1rem;
-  box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(197, 160, 40, 0.08);
+  padding: 2rem;
+  background: var(--mono-black);
+  border: 1px solid var(--mono-gray-800);
+  border-radius: 0;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(16px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
   }
 }
 
 .fade-in {
-  animation: fadeIn 0.7s ease-out both;
+  animation: fadeIn 0.4s ease-out both;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .fade-in {
     animation: none;
   }
-
-  input:focus,
-  select:focus,
-  textarea:focus {
-    transform: none;
-  }
 }
 
 input,
 select,
 textarea {
-  transition:
-    border-color 0.2s ease,
-    background-color 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: border-color 0.15s ease;
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #001a33;
+  background: var(--mono-black);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--lapd-navy-light);
-  border-radius: 4px;
+  background: var(--mono-gray-600);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #254a75;
+  background: var(--mono-gray-400);
 }
 
-/* Print: card only, centered */
 @media print {
   body {
     background: white !important;
-  }
-
-  body::before {
-    display: none !important;
+    color: black !important;
   }
 
   .no-print {
@@ -140,7 +105,6 @@ textarea {
   [data-card] {
     box-shadow: none !important;
     border: none !important;
-    border-radius: 0 !important;
   }
 }
 

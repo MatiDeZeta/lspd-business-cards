@@ -30,42 +30,29 @@ export default function Home() {
   if (!isHydrated) {
     return (
       <main className="min-h-screen flex items-center justify-center">
-        <p className="text-slate-400 text-sm tracking-wide">Loading...</p>
+        <p className="text-neutral-500 text-sm tracking-widest uppercase">
+          Loading
+        </p>
       </main>
     );
   }
 
   return (
-    <main className="min-h-screen p-6 md:p-10 relative z-10">
+    <main className="min-h-screen p-6 md:p-12 relative z-10">
       <div className="max-w-6xl mx-auto">
-        <header className="mb-10 no-print fade-in">
-          <div className="flex items-center gap-5 mb-4">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/Logo-LSPD.png"
-              alt="LSPD Seal"
-              className="w-14 h-14 object-contain opacity-90"
-            />
-            <div>
-              <h1 className="text-3xl md:text-4xl font-light tracking-tight text-white">
-                LSPD Card Generator
-              </h1>
-              <p className="text-slate-400 text-sm mt-1">
-                Los Santos Police Department Business Cards
-              </p>
-            </div>
-          </div>
-          <div className="h-px bg-gradient-to-r from-[#C5A028]/60 via-[#C5A028]/20 to-transparent max-w-md" />
+        <header className="mb-12 no-print fade-in border-b border-neutral-800 pb-8">
+          <p className="text-[11px] uppercase tracking-[0.3em] text-neutral-500 mb-3">
+            Los Santos Police Department
+          </p>
+          <h1 className="text-2xl md:text-3xl font-light tracking-tight text-white">
+            Card Generator
+          </h1>
         </header>
 
-        <div className="grid lg:grid-cols-[1fr,auto] gap-10 items-start">
-          <div className="space-y-6 no-print">
-            <div className="panel-gold fade-in">
-              <h2 className="text-xl font-light text-white mb-6 flex items-center gap-3">
-                <span
-                  className="w-1.5 h-1.5 bg-[#C5A028] rounded-full"
-                  aria-hidden="true"
-                />
+        <div className="grid lg:grid-cols-[1fr,auto] gap-8 lg:gap-12 items-start">
+          <div className="space-y-8 no-print">
+            <div className="panel fade-in">
+              <h2 className="text-xs uppercase tracking-[0.25em] text-neutral-500 mb-8">
                 Officer Information
               </h2>
               <CardForm
@@ -91,26 +78,26 @@ export default function Home() {
           <PreviewPanel cardData={cardData} cardRef={cardRef} />
         </div>
 
-        <footer className="mt-16 pt-8 border-t border-[#1e3a5f]/60 text-center no-print fade-in">
-          <p className="text-slate-500 text-xs leading-relaxed">
+        <footer className="mt-20 pt-8 border-t border-neutral-800 text-center no-print fade-in">
+          <p className="text-neutral-600 text-xs leading-relaxed tracking-wide">
             Hecho con ❤️ por{" "}
             <a
               href="https://github.com/MatiDeZeta"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#C5A028]/90 hover:text-[#C5A028] transition-colors duration-300"
+              className="text-neutral-400 hover:text-white transition-colors"
             >
               MatiDZ
             </a>{" "}
             para la comunidad de GTA World en Español
             <br />
-            Versión 2.0.0
+            <span className="text-neutral-700">v2.0.0</span>
             <br />
             <a
               href="https://github.com/MatiDeZeta/lspd-business-cards"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[#C5A028]/90 hover:text-[#C5A028] transition-colors duration-300"
+              className="text-neutral-400 hover:text-white transition-colors"
             >
               GitHub
             </a>

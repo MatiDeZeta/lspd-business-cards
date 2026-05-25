@@ -12,10 +12,10 @@ interface CardFormProps {
 }
 
 const inputClassName =
-  "w-full px-4 py-3 bg-[#0a1628]/60 border border-[#1e3a5f]/60 rounded-xl text-white text-sm backdrop-blur-sm transition-all duration-200 focus:border-[#C5A028]/60 focus:bg-[#0a1628]/80 focus:ring-1 focus:ring-[#C5A028]/40 placeholder:text-slate-500";
+  "w-full px-3 py-2.5 bg-black border border-neutral-800 text-white text-sm transition-colors focus:border-white focus:outline-none placeholder:text-neutral-600";
 
 const labelClassName =
-  "block text-xs text-slate-300 mb-2 uppercase tracking-wide font-medium";
+  "block text-[11px] text-neutral-500 mb-2 uppercase tracking-[0.15em]";
 
 export default function CardForm({
   cardData,
@@ -28,10 +28,10 @@ export default function CardForm({
     <form className="space-y-0" onSubmit={(e) => e.preventDefault()}>
       {warnings.length > 0 && (
         <div
-          className="mb-6 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3"
+          className="mb-6 border border-neutral-700 bg-neutral-950 px-4 py-3"
           role="status"
         >
-          <ul className="space-y-1 text-sm text-amber-100">
+          <ul className="space-y-1 text-sm text-neutral-400">
             {warnings.map((warning) => (
               <li key={warning.field}>{warning.message}</li>
             ))}
@@ -50,7 +50,7 @@ export default function CardForm({
             value={cardData.fullName}
             onChange={(e) => onChange("fullName", e.target.value)}
             className={`${inputClassName} ${
-              warningFields.has("fullName") ? "border-amber-500/50" : ""
+              warningFields.has("fullName") ? "border-neutral-500" : ""
             }`}
             placeholder="John A. Smith"
           />
@@ -153,7 +153,7 @@ export default function CardForm({
       <div className="grid sm:grid-cols-2 gap-4 mb-6">
         <div>
           <label htmlFor="fax" className={labelClassName}>
-            Fax <span className="normal-case text-slate-500">(optional)</span>
+            Fax <span className="normal-case tracking-normal">(optional)</span>
           </label>
           <input
             type="tel"
@@ -174,7 +174,7 @@ export default function CardForm({
             value={cardData.email}
             onChange={(e) => onChange("email", e.target.value)}
             className={`${inputClassName} ${
-              warningFields.has("email") ? "border-amber-500/50" : ""
+              warningFields.has("email") ? "border-neutral-500" : ""
             }`}
             placeholder="name@lspdonline.org"
           />
